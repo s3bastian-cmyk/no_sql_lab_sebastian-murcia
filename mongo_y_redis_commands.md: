@@ -1,0 +1,123 @@
+mongo_commands.md
+use tienda
+Inserción
+db.productos.insertMany([
+  {
+    nombre: "Laptop ASUS",
+    precio: 2500,
+    stock: 10,
+    categoria: "Tecnología"
+  },
+  {
+    nombre: "Mouse Logitech",
+    precio: 80,
+    stock: 50,
+    categoria: "Accesorios"
+  }
+]);
+Consultas
+db.productos.find()
+db.productos.find({ categoria: "Tecnología" })
+db.productos.find({}, { nombre: 1, precio: 1, _id: 0 })
+Actualizaciones
+db.productos.updateOne(
+  { nombre: "Laptop ASUS" },
+  { $inc: { stock: -1 } }
+)
+Eliminaciones
+db.productos.deleteOne({ nombre: "Mouse Logitech" })
+2. Colección: productos
+Inserción
+db.productos.insertMany([
+  {
+    nombre: "Laptop ASUS",
+    precio: 2500,
+    stock: 10,
+    categoria: "Tecnología"
+  },
+  {
+    nombre: "Mouse Logitech",
+    precio: 80,
+    stock: 50,
+    categoria: "Accesorios"
+  }
+]);
+Consultas
+db.productos.find()
+db.productos.find({ categoria: "Tecnología" })
+db.productos.find({}, { nombre: 1, precio: 1, _id: 0 })
+Actualizaciones
+db.productos.updateOne(
+  { nombre: "Laptop ASUS" },
+  { $inc: { stock: -1 } }
+)
+Eliminaciones
+db.productos.deleteOne({ nombre: "Mouse Logitech" })
+3. Colección: clientes
+Inserción
+db.clientes.insertMany([
+  {
+    nombre: "Carlos Gómez",
+    email: "carlos@example.com",
+    direccion: "Calle 123"
+  },
+  {
+    nombre: "María Pérez",
+    email: "maria@example.com",
+    direccion: "Av 45 #10"
+  }
+]);
+Consultas
+db.clientes.find({ nombre: "Carlos Gómez" })
+4. Colección: proveedores
+Inserción
+db.proveedores.insertMany([
+  { nombre: "Tech Import", telefono: "555-1234" },
+  { nombre: "Logi Supplier", telefono: "555-9876" }
+]);
+5. Colección: órdenes
+Inserción
+db.ordenes.insertOne({
+  cliente: "Carlos Gómez",
+  productos: [
+    { nombre: "Laptop ASUS", cantidad: 1 },
+    { nombre: "Mouse Logitech", cantidad: 2 }
+  ],
+  total: 2660,
+  fecha: new Date()
+});
+Consultas
+db.ordenes.find().pretty()
+db.ordenes.find({ cliente: "Carlos Gómez" })
+
+redis_commands.md
+1. STRINGS
+Contador global de visitas
+INCR visitas
+GET visitas
+2. HASHES
+Representación de productos
+HSET producto:1 nombre "Laptop ASUS" precio 2500 categoria "Tecnología"
+HSET producto:2 nombre "Mouse Logitech" precio 80 categoria "Accesorios"
+
+Obtener datos
+HGETALL producto:1
+HGET producto:2 precio
+3. STRINGS para stock
+SET stock:1 10
+SET stock:2 50
+GET stock:1
+4. SORTED SETS – Ranking de ventas
+ZADD ranking_ventas 100 "Laptop ASUS"
+ZADD ranking_ventas 250 "Mouse Logitech"
+Top ventas
+ZRANGE ranking_ventas 0 -1 WITHSCORES
+🛒 5. HASH – Carrito del usuario
+HSET carrito:usuario123 producto1 1 producto2 2
+HGETALL carrito:usuario123
+6. TTL
+Código temporal
+SET codpromo:123 2025
+EXPIRE codpromo:123 60
+TTL codpromo:123
+
